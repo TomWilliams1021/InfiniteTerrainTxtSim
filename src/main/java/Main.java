@@ -29,7 +29,6 @@ public class Main {
         String inputString = userInputScanner.nextLine();
         inputString.toLowerCase();
         char inputChar = inputString.charAt(0);
-        System.out.println(inputChar);
 
         return inputChar;
     }

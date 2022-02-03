@@ -4,10 +4,10 @@ enum movementDirection {
     North,
     South,
     East,
-    West
+    West;
 }
 
-public class GenericCharacter {
+public abstract class GenericCharacter {
     private String characterName;
     private int characterX_Coord;
     private int characterY_Coord;
