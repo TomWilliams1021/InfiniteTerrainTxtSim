@@ -1,3 +1,5 @@
+package com.MapSquares;
+
 import com.MapSquares.MapSquare;
 
 import java.util.ArrayList;

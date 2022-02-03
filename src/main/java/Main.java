@@ -1,27 +1,37 @@
-import com.MapSquares.ForestMapSquare;
-import com.MapSquares.HillMapSquare;
-import com.MapSquares.MapSquare;
-import com.MapSquares.MountainMapSquare;
+import com.MapSquares.*;
+import com.MainGameClasses.Game;
+
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args){
-        Map gameMap = createMap();
+        boolean validNewGameString = false;
 
-        gameMap.addMapSquare(new MountainMapSquare());
-        gameMap.addMapSquare(new HillMapSquare());
-        gameMap.addMapSquare(new ForestMapSquare());
+        while(validNewGameString != true){
+            char newGameString = StartNewGame();
 
-
-
-        for (int i = 0; i < gameMap.MapSize(); i++) {
-            MapSquare tstSquare = gameMap.getMapSquare(i);
-            System.out.println(tstSquare.getSquareType());
+            if (newGameString == 'y'){
+                Game newGame = new Game();
+            } else if (newGameString == 'n'){
+                return;
+            }else{
+                System.out.println("INVALID character entered, please try again.");
+            }
         }
 
     }
 
-    public static Map createMap(){
-        return new Map();
+    public static char StartNewGame(){
+        Scanner userInputScanner = new Scanner(System.in);
+        System.out.println("Welcome to ???. To begin a new game please enter Y, to exit please enter N");
+        String inputString = userInputScanner.nextLine();
+        inputString.toLowerCase();
+        char inputChar = inputString.charAt(0);
+        System.out.println(inputChar);
+
+        return inputChar;
     }
+
 }
