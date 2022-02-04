@@ -1,11 +1,5 @@
 package com.Characters;
 
-enum movementDirection {
-    North,
-    South,
-    East,
-    West;
-}
 
 public abstract class GenericCharacter {
     private String characterName;
@@ -42,12 +36,33 @@ public abstract class GenericCharacter {
         return this.characterY_Coord;
     }
 
-    public void setMove(movementDirection move){
-        this.move = move;
+    public void setMove(String move){
+        movementDirection moveValue = movementDirection.valueOf(move);
+        this.move = moveValue;
     }
 
     public movementDirection getMove()
     {
-        return move;
+        return this.move;
+    }
+
+    public void incrementX_YCoordinateBasedOnMove(movementDirection move){
+        switch(move){
+            case North:
+                this.setCharacterX_Coord(this.getCharacterX_Coord() - movementDirection.North.value);
+                break;
+            case South:
+                this.setCharacterX_Coord(this.getCharacterX_Coord() - movementDirection.South.value);
+                break;
+            case East:
+                this.setCharacterY_Coord(this.getCharacterY_Coord() - movementDirection.East.value);
+                break;
+            case West:
+                this.setCharacterY_Coord(this.getCharacterY_Coord() - movementDirection.West.value);
+                break;
+            default:
+                break;
+
+        }
     }
 }

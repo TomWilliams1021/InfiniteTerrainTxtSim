@@ -4,7 +4,6 @@ import com.MapSquares.*;
 import com.MapSquares.Map;
 import com.Characters.Player;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,26 +12,66 @@ public class Game {
     private Player player1;
 
     public Game(){
+        boolean keepPlaying = true;
+        boolean keepPlayingInputValid = false;
+        boolean movementInputValid = false;
 
         player1 = newPlayer();
         gameMap.addMapSquare(new MountainMapSquare());
 
-        LoadSquaresAroundPlayerIntoLocalAreaMap(player1);
-        DrawLocalMap();
+        while (keepPlaying == true){
+            Scanner userInputScanner = new Scanner(System.in);
+            LoadSquaresAroundPlayerIntoLocalAreaMap(player1);
+            DrawLocalMap();
 
-        //Display Squares around player.
+            while(movementInputValid == false) {
+                System.out.println("Enter North / South / East / West to move in that direction.");
+                String inputString = userInputScanner.nextLine();
+                switch (inputString) {
+                    case "North":
+                        player1.setMove("North");
+                        movementInputValid = true;
+                        break;
+                    case "South":
+                        player1.setMove("South");
+                        movementInputValid = true;
+                        break;
+                    case "East":
+                        player1.setMove("East");
+                        movementInputValid = true;
+                        break;
+                    case "West":
+                        player1.setMove("West");
+                        movementInputValid = true;
+                        break;
+                    default:
+                        System.out.println("The direction input was invalid.");
+                        break;
+                }
+            }
 
-        /*
-        gameMap.addMapSquare(new MountainMapSquare());
-        gameMap.addMapSquare(new HillMapSquare());
-        gameMap.addMapSquare(new ForestMapSquare());
+            if(movementInputValid == true) {
+                player1.incrementX_YCoordinateBasedOnMove(player1.getMove());
+                movementInputValid = false;
+            }
 
-        for (int i = 0; i < gameMap.MapSize(); i++) {
-            MapSquare tstSquare = gameMap.getMapSquare(i);
-            System.out.println(tstSquare.getSquareType());
+            while(keepPlayingInputValid == false) {
+                System.out.println("Keep Playing?");
+                String inputString = userInputScanner.nextLine();
+                inputString.toLowerCase();
+                char inputChar = inputString.charAt(0);
+
+                if (inputChar == 'y') {
+                    keepPlayingInputValid = true;
+                } else if (inputChar == 'n') {
+                    keepPlayingInputValid = true;
+                    keepPlaying = false;
+                } else {
+                    System.out.println("INVALID character entered, please try again.");
+                }
+            }
+            keepPlayingInputValid = false;
         }
-        */
-
     }
 
     public Player newPlayer(){
@@ -117,6 +156,8 @@ public class Game {
                     thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);
                     addMapSquareToLocalAreaMap(thisSquare, player);
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -162,6 +203,7 @@ public class Game {
 
         if(squareExists == null){
             thisSquare = generateNewMapSquare(x_coord, y_coord);
+            gameMap.addMapSquare(thisSquare);
         }else{
             thisSquare = squareExists;
         }
