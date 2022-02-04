@@ -4,6 +4,7 @@ public abstract class MapSquare {
     private int x_coord;
     private int y_coord;
     private String squareType;
+    private String[][] squareArt;
 
     public MapSquare(){
         this.x_coord = 0;
@@ -34,5 +35,13 @@ public abstract class MapSquare {
 
     public String getSquareType(){
         return this.squareType;
+    }
+
+    public String[][] getSquareArt(){
+        return squareArt;
+    }
+
+    public void setSquareArt(String[][] squareArt) {
+        this.squareArt = squareArt;
     }
 }

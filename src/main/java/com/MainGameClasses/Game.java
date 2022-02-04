@@ -14,6 +14,12 @@ public class Game {
     public Game(){
         gameMap = new Map();
         player1 = newPlayerNameCheckAndSet();
+
+        Random random = new Random();
+        int randNumForTreasureXCoord = random.nextInt(25 - 5) + 5;
+        int randNumForTreasureYCoord = random.nextInt(25 - 5) + 5;
+        MapSquare thisSquare = generateTreasureMapSquare(randNumForTreasureXCoord, randNumForTreasureYCoord);
+        gameMap.addMapSquare(thisSquare);
     }
 
     public Player newPlayerNameCheckAndSet(){
@@ -116,13 +122,13 @@ public class Game {
 
     public MapSquare generateNewMapSquare(int x_coord, int y_coord){
         Random randNum = new Random();
-        int randNumResult = randNum.nextInt(4-0);
+        int randNumResult = randNum.nextInt(4);
 
-        MapSquare newMapSquare = new PlainsMapSquare();
+        MapSquare newMapSquare = new MountainMapSquare();
 
         switch(randNumResult){
             case 1:
-                newMapSquare = new MountainMapSquare();
+                newMapSquare = new PlainsMapSquare();
                 break;
             case 2:
                 newMapSquare = new HillMapSquare();
@@ -130,7 +136,7 @@ public class Game {
             case 3:
                 newMapSquare = new ForestMapSquare();
             case 4:
-                //Will give a plains map square as this is the default.
+                //Will give a mountain map square as this is the default.
                 break;
         }
 
@@ -138,6 +144,13 @@ public class Game {
         newMapSquare.setY_Coord(y_coord);
 
         return newMapSquare;
+    }
+
+    public MapSquare generateTreasureMapSquare(int x_coord, int y_coord){
+        MapSquare treasureMapSquare = new TreasureMapSquare();
+        treasureMapSquare.setX_Coord(x_coord);
+        treasureMapSquare.setY_Coord(y_coord);
+        return treasureMapSquare;
     }
 
     public MapSquare setSquareValue(MapSquare squareExists, int x_coord, int y_coord, Player player){
@@ -221,5 +234,47 @@ public class Game {
 
     public Player getPlayer1(){
         return player1;
+    }
+
+    public void CalculateTreasureDistance(Player player){
+        MapSquare treasure = gameMap.getMapSquare(0);
+        int treasureX = treasure.getX_coord();
+        int treasureY = treasure.getY_Coord();
+        int playerX = player.getCharacterX_Coord();
+        int playerY = player.getCharacterY_Coord();
+        int xDistance;
+        int yDistance;
+
+        if(treasureX < 0 || playerX < 0){
+            //If either or both coordinates are negative, make them both positive and add together
+            // to find the total difference between them.
+            treasureX = Math.abs(treasureX);
+            playerX = Math.abs(playerX);
+            xDistance = treasureX + playerX;
+        }else if(treasureX > playerX){
+            xDistance = treasureX - playerX;
+        }else{
+            xDistance = playerX - treasureX;
+        }
+
+        if(treasureY < 0 || playerY < 0){
+            //If either or both coordinates are negative, make them both positive and add together
+            // to find the total difference between them.
+            treasureY = Math.abs(treasureY);
+            playerY = Math.abs(playerY);
+            yDistance = treasureY + playerY;
+        }else if(treasureY > playerY){
+            yDistance = treasureY - playerY;
+        }else{
+            yDistance = playerY - treasureY;
+        }
+
+        double distance = Math.sqrt((xDistance*xDistance)+(yDistance*yDistance));
+        player.setGoldenCompass(distance);
+    }
+
+    public void asciiArtDrawTest(){
+        gameMap.addMapSquare(generateNewMapSquare(0,0));
+        System.out.println(gameMap.getMapSquare(1).getSquareArt().toString());
     }
 }

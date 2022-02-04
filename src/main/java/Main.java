@@ -1,4 +1,6 @@
 import com.MainGameClasses.Game;
+import com.MapSquares.MapSquare;
+
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +13,7 @@ public class Main {
         while(!validNewGameString){
             char newGameString;
             boolean keepPlaying;
-            boolean keepPlayingInputValid = false;
+            //boolean keepPlayingInputValid = false;
             boolean movementInputValid = false;
             String inputString;
 
@@ -24,7 +26,7 @@ public class Main {
                 newGame = new Game();
                 keepPlaying = true;
 
-            } else if (newGameString == 'n'){
+            }else if (newGameString == 'n'){
                 break;
             }else{
                 System.out.println("INVALID character entered, please try again.");
@@ -33,9 +35,17 @@ public class Main {
 
                 while (keepPlaying) {
 
-
+                    System.out.println("\r\n" + "\r\n" + "\r\n" + "\r\n"+ "\r\n");
                     newGame.LoadSquaresAroundPlayerIntoLocalAreaMap(newGame.getPlayer1());
                     newGame.DrawLocalMap();
+                    System.out.println("\r");
+                    newGame.CalculateTreasureDistance(newGame.getPlayer1());
+
+                    System.out.println("Your Golden compass tells you the treasure is " + newGame.getPlayer1().getGoldenCompass() + "m away.");
+                    if(newGame.getPlayer1().getGoldenCompass() == 0.0){
+                        System.out.println("You've successfully found the treasure,\r\n CONGRATULATIONS!!!");
+                        break;
+                    }
 
                     while(!movementInputValid) {
                         System.out.println("Enter North / South / East / West to move in that direction.");
@@ -47,22 +57,6 @@ public class Main {
                         newGame.getPlayer1().incrementX_YCoordinateBasedOnMove(newGame.getPlayer1().getMove());
                         movementInputValid = false;
                     }
-
-                    while(!keepPlayingInputValid) {
-                        System.out.println("Keep Playing?");
-                        inputString = userInputScanner.nextLine();
-                        char keepPlayingChar = StartNewGame(inputString);
-
-                        if (keepPlayingChar == 'y') {
-                            keepPlayingInputValid = true;
-                        } else if (keepPlayingChar == 'n') {
-                            keepPlayingInputValid = true;
-                            keepPlaying = false;
-                        } else {
-                            System.out.println("INVALID character entered, please try again.");
-                        }
-                    }
-                    keepPlayingInputValid = false;
                 }
 
 
@@ -73,5 +67,4 @@ public class Main {
     public static char StartNewGame(String inputString){
         return inputString.toLowerCase().charAt(0);
     }
-
 }
