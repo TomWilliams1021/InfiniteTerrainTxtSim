@@ -8,73 +8,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    private Map gameMap = new Map();
+    private Map gameMap;
     private Player player1;
 
     public Game(){
-        boolean keepPlaying = true;
-        boolean keepPlayingInputValid = false;
-        boolean movementInputValid = false;
-
-        player1 = newPlayer();
-        gameMap.addMapSquare(new MountainMapSquare());
-
-        while (keepPlaying == true){
-            Scanner userInputScanner = new Scanner(System.in);
-            LoadSquaresAroundPlayerIntoLocalAreaMap(player1);
-            DrawLocalMap();
-
-            while(movementInputValid == false) {
-                System.out.println("Enter North / South / East / West to move in that direction.");
-                String inputString = userInputScanner.nextLine();
-                switch (inputString) {
-                    case "North":
-                        player1.setMove("North");
-                        movementInputValid = true;
-                        break;
-                    case "South":
-                        player1.setMove("South");
-                        movementInputValid = true;
-                        break;
-                    case "East":
-                        player1.setMove("East");
-                        movementInputValid = true;
-                        break;
-                    case "West":
-                        player1.setMove("West");
-                        movementInputValid = true;
-                        break;
-                    default:
-                        System.out.println("The direction input was invalid.");
-                        break;
-                }
-            }
-
-            if(movementInputValid == true) {
-                player1.incrementX_YCoordinateBasedOnMove(player1.getMove());
-                movementInputValid = false;
-            }
-
-            while(keepPlayingInputValid == false) {
-                System.out.println("Keep Playing?");
-                String inputString = userInputScanner.nextLine();
-                inputString.toLowerCase();
-                char inputChar = inputString.charAt(0);
-
-                if (inputChar == 'y') {
-                    keepPlayingInputValid = true;
-                } else if (inputChar == 'n') {
-                    keepPlayingInputValid = true;
-                    keepPlaying = false;
-                } else {
-                    System.out.println("INVALID character entered, please try again.");
-                }
-            }
-            keepPlayingInputValid = false;
-        }
+        gameMap = new Map();
+        player1 = newPlayerNameCheckAndSet();
     }
 
-    public Player newPlayer(){
+    public Player newPlayerNameCheckAndSet(){
         System.out.println("Time to create your character, Please enter their name.");
         Scanner userInputScanner = new Scanner(System.in);
         String playerNameString = userInputScanner.nextLine();
@@ -249,5 +191,35 @@ public class Game {
         System.out.println(MapStrings[1][0] + " | " + MapStrings[1][1] + " | " + MapStrings[1][2]);
         System.out.println(MapStrings[2][0] + " | " + MapStrings[2][1] + " | " + MapStrings[2][2]);
 
+    }
+
+    public boolean CheckMovementInputValid(String inputString){
+        boolean movementInputValid = false;
+        switch (inputString) {
+            case "North":
+                player1.setMove("North");
+                movementInputValid = true;
+                break;
+            case "South":
+                player1.setMove("South");
+                movementInputValid = true;
+                break;
+            case "East":
+                player1.setMove("East");
+                movementInputValid = true;
+                break;
+            case "West":
+                player1.setMove("West");
+                movementInputValid = true;
+                break;
+            default:
+                System.out.println("The direction input was invalid.");
+                break;
+        }
+        return movementInputValid;
+    }
+
+    public Player getPlayer1(){
+        return player1;
     }
 }
