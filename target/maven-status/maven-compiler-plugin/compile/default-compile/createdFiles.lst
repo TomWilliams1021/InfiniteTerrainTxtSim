@@ -1,0 +1,13 @@
+com\Characters\Player.class
+com\MapSquares\ForestMapSquare.class
+com\MainGameClasses\Game.class
+com\MapSquares\MountainMapSquare.class
+com\Characters\GenericCharacter$1.class
+com\Characters\movementDirection.class
+com\MapSquares\Map.class
+com\Characters\GenericCharacter.class
+com\MapSquares\TreasureMapSquare.class
+Main.class
+com\MapSquares\PlainsMapSquare.class
+com\MapSquares\MapSquare.class
+com\MapSquares\HillMapSquare.class

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">InfiniteTerrainSim</a> &gt; <a href="index.source.html" class="el_package">com.MainGameClasses</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package com.MainGameClasses;
+
+import com.MapSquares.*;
+import com.MapSquares.Map;
+import com.Characters.Player;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Game {
+    private Map gameMap;
+    private Player player1;
+
+<span class="nc" id="L14">    public Game(){</span>
+<span class="nc" id="L15">        gameMap = new Map();</span>
+<span class="nc" id="L16">        player1 = newPlayerNameCheckAndSet();</span>
+
+<span class="nc" id="L18">        Random random = new Random();</span>
+<span class="nc" id="L19">        int randNumForTreasureXCoord = random.nextInt(25 - 5) + 5;</span>
+<span class="nc" id="L20">        int randNumForTreasureYCoord = random.nextInt(25 - 5) + 5;</span>
+<span class="nc" id="L21">        MapSquare thisSquare = generateTreasureMapSquare(randNumForTreasureXCoord, randNumForTreasureYCoord);</span>
+<span class="nc" id="L22">        gameMap.addMapSquare(thisSquare);</span>
+
+        //asciiArtDrawTest();
+<span class="nc" id="L25">    }</span>
+
+    public Player newPlayerNameCheckAndSet(){
+<span class="nc" id="L28">        System.out.println(&quot;Time to create your character, Please enter their name.&quot;);</span>
+<span class="nc" id="L29">        Scanner userInputScanner = new Scanner(System.in);</span>
+<span class="nc" id="L30">        String playerNameString = userInputScanner.nextLine();</span>
+<span class="nc" id="L31">        return new Player(playerNameString);</span>
+    }
+
+    public void LoadSquaresAroundPlayerIntoLocalAreaMap(Player player){
+<span class="nc" id="L35">        int currentX_Coord = player.getCharacterX_Coord();</span>
+<span class="nc" id="L36">        int currentY_Coord = player.getCharacterY_Coord();</span>
+
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        for (int i = 0; i &lt; 9; i++) {</span>
+<span class="nc" id="L39">            MapSquare squareExists = null;</span>
+<span class="nc" id="L40">            int thisSquareX_Coord = 0;</span>
+<span class="nc" id="L41">            int thisSquareY_Coord = 0;</span>
+            MapSquare thisSquare;
+
+<span class="nc bnc" id="L44" title="All 10 branches missed.">            switch(i){</span>
+                case 0:
+<span class="nc" id="L46">                    squareExists = searchExistingMapSquares(currentX_Coord,currentY_Coord);</span>
+<span class="nc" id="L47">                    thisSquareX_Coord = currentX_Coord;</span>
+<span class="nc" id="L48">                    thisSquareY_Coord = currentY_Coord;</span>
+<span class="nc" id="L49">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L50">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+                    //Add thisSquare into correct position in localAreaMap.
+<span class="nc" id="L52">                    break;</span>
+                case 1:
+<span class="nc" id="L54">                    squareExists = searchExistingMapSquares((currentX_Coord + 1),currentY_Coord);</span>
+<span class="nc" id="L55">                    thisSquareX_Coord = currentX_Coord + 1;</span>
+<span class="nc" id="L56">                    thisSquareY_Coord = currentY_Coord;</span>
+<span class="nc" id="L57">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L58">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L59">                    break;</span>
+                case 2:
+<span class="nc" id="L61">                    squareExists = searchExistingMapSquares(currentX_Coord,(currentY_Coord + 1));</span>
+<span class="nc" id="L62">                    thisSquareX_Coord = currentX_Coord;</span>
+<span class="nc" id="L63">                    thisSquareY_Coord = currentY_Coord + 1;</span>
+<span class="nc" id="L64">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L65">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L66">                    break;</span>
+                case 3:
+<span class="nc" id="L68">                    squareExists = searchExistingMapSquares((currentX_Coord - 1),currentY_Coord);</span>
+<span class="nc" id="L69">                    thisSquareX_Coord = currentX_Coord - 1;</span>
+<span class="nc" id="L70">                    thisSquareY_Coord = currentY_Coord;</span>
+<span class="nc" id="L71">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L72">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L73">                    break;</span>
+                case 4:
+<span class="nc" id="L75">                    squareExists = searchExistingMapSquares(currentX_Coord,(currentY_Coord - 1));</span>
+<span class="nc" id="L76">                    thisSquareX_Coord = currentX_Coord;</span>
+<span class="nc" id="L77">                    thisSquareY_Coord = currentY_Coord - 1;</span>
+<span class="nc" id="L78">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L79">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L80">                    break;</span>
+                case 5:
+<span class="nc" id="L82">                    squareExists = searchExistingMapSquares((currentX_Coord + 1),(currentY_Coord + 1));</span>
+<span class="nc" id="L83">                    thisSquareX_Coord = currentX_Coord + 1;</span>
+<span class="nc" id="L84">                    thisSquareY_Coord = currentY_Coord + 1;</span>
+<span class="nc" id="L85">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L86">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L87">                    break;</span>
+                case 6:
+<span class="nc" id="L89">                    squareExists = searchExistingMapSquares((currentX_Coord - 1),(currentY_Coord - 1));</span>
+<span class="nc" id="L90">                    thisSquareX_Coord = currentX_Coord - 1;</span>
+<span class="nc" id="L91">                    thisSquareY_Coord = currentY_Coord - 1;</span>
+<span class="nc" id="L92">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L93">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L94">                    break;</span>
+                    case 7:
+<span class="nc" id="L96">                    squareExists = searchExistingMapSquares((currentX_Coord + 1),(currentY_Coord - 1));</span>
+<span class="nc" id="L97">                    thisSquareX_Coord = currentX_Coord + 1;</span>
+<span class="nc" id="L98">                    thisSquareY_Coord = currentY_Coord - 1;</span>
+<span class="nc" id="L99">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L100">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L101">                    break;</span>
+                case 8:
+<span class="nc" id="L103">                    squareExists = searchExistingMapSquares((currentX_Coord - 1),(currentY_Coord + 1));</span>
+<span class="nc" id="L104">                    thisSquareX_Coord = currentX_Coord - 1;</span>
+<span class="nc" id="L105">                    thisSquareY_Coord = currentY_Coord + 1;</span>
+<span class="nc" id="L106">                    thisSquare = setSquareValue(squareExists, thisSquareX_Coord, thisSquareY_Coord, player);</span>
+<span class="nc" id="L107">                    addMapSquareToLocalAreaMap(thisSquare, player);</span>
+<span class="nc" id="L108">                    break;</span>
+                default:
+                    break;
+            }
+        }
+<span class="nc" id="L113">    }</span>
+
+    public MapSquare searchExistingMapSquares(int x_coord, int y_coord){
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (int i = 0; i &lt; gameMap.MapSize(); i++) {</span>
+<span class="nc" id="L117">            MapSquare currentMapSquare = gameMap.getMapSquare(i);</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">            if(currentMapSquare.getX_coord() == x_coord &amp;&amp; currentMapSquare.getY_Coord() == y_coord){</span>
+<span class="nc" id="L119">                return currentMapSquare;</span>
+            }
+        }
+<span class="nc" id="L122">        return null;</span>
+    }
+
+    public MapSquare generateNewMapSquare(int x_coord, int y_coord){
+<span class="nc" id="L126">        Random randNum = new Random();</span>
+<span class="nc" id="L127">        int randNumResult = randNum.nextInt(4);</span>
+
+<span class="nc" id="L129">        MapSquare newMapSquare = new MountainMapSquare();</span>
+
+<span class="nc bnc" id="L131" title="All 4 branches missed.">        switch(randNumResult){</span>
+            case 1:
+<span class="nc" id="L133">                newMapSquare = new PlainsMapSquare();</span>
+<span class="nc" id="L134">                break;</span>
+            case 2:
+<span class="nc" id="L136">                newMapSquare = new HillMapSquare();</span>
+<span class="nc" id="L137">                break;</span>
+            case 3:
+<span class="nc" id="L139">                newMapSquare = new ForestMapSquare();</span>
+            case 4:
+                //Will give a mountain map square as this is the default.
+                break;
+        }
+
+<span class="nc" id="L145">        newMapSquare.setX_Coord(x_coord);</span>
+<span class="nc" id="L146">        newMapSquare.setY_Coord(y_coord);</span>
+
+<span class="nc" id="L148">        return newMapSquare;</span>
+    }
+
+    public MapSquare generateTreasureMapSquare(int x_coord, int y_coord){
+<span class="nc" id="L152">        MapSquare treasureMapSquare = new TreasureMapSquare();</span>
+<span class="nc" id="L153">        treasureMapSquare.setX_Coord(x_coord);</span>
+<span class="nc" id="L154">        treasureMapSquare.setY_Coord(y_coord);</span>
+<span class="nc" id="L155">        return treasureMapSquare;</span>
+    }
+
+    public MapSquare setSquareValue(MapSquare squareExists, int x_coord, int y_coord, Player player){
+        MapSquare thisSquare;
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if(squareExists == null){</span>
+<span class="nc" id="L162">            thisSquare = generateNewMapSquare(x_coord, y_coord);</span>
+<span class="nc" id="L163">            gameMap.addMapSquare(thisSquare);</span>
+        }else{
+<span class="nc" id="L165">            thisSquare = squareExists;</span>
+        }
+
+<span class="nc" id="L168">        return thisSquare;</span>
+    }
+
+    public void addMapSquareToLocalAreaMap(MapSquare squareToAdd, Player player){
+        //take the coordinates of the square being added(x,y),
+        // compare them to the players coordinates(x,y) and place the square in the
+        // corresponding position in the LocalAreaMap array (player is always in the centre).
+        int localMapX;
+        int localMapY;
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if(squareToAdd.getX_coord() &lt; player.getCharacterX_Coord()){</span>
+<span class="nc" id="L178">            localMapX = 0;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        }else if(squareToAdd.getX_coord() == player.getCharacterX_Coord()){</span>
+<span class="nc" id="L180">            localMapX = 1;</span>
+        }else {
+<span class="nc" id="L182">            localMapX = 2;</span>
+        }
+
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if(squareToAdd.getY_Coord() &lt; player.getCharacterY_Coord()){</span>
+<span class="nc" id="L186">            localMapY = 2;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        }else if (squareToAdd.getY_Coord() == player.getCharacterY_Coord()){</span>
+<span class="nc" id="L188">            localMapY = 1;</span>
+        }else{
+<span class="nc" id="L190">            localMapY = 0;</span>
+        }
+
+<span class="nc" id="L193">        gameMap.setLocalAreaMap(localMapX, localMapY, squareToAdd);</span>
+
+<span class="nc" id="L195">    }</span>
+
+    public void DrawLocalMap(){
+<span class="nc" id="L198">        String[][] MapStrings = new String[3][3];</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        for (int x = 0; x &lt; 3; x++) {</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">            for (int y = 0; y &lt; 3; y++) {</span>
+<span class="nc" id="L201">                MapStrings[x][y] = (gameMap.getLocalAreaMapSquare(x,y).getSquareType());</span>
+            }
+        }
+
+<span class="nc" id="L205">        System.out.println(MapStrings[0][0] + &quot; | &quot; + MapStrings[0][1] + &quot; | &quot; + MapStrings[0][2]);</span>
+<span class="nc" id="L206">        System.out.println(MapStrings[1][0] + &quot; | &quot; + MapStrings[1][1] + &quot; | &quot; + MapStrings[1][2]);</span>
+<span class="nc" id="L207">        System.out.println(MapStrings[2][0] + &quot; | &quot; + MapStrings[2][1] + &quot; | &quot; + MapStrings[2][2]);</span>
+
+<span class="nc" id="L209">    }</span>
+
+    public boolean CheckMovementInputValid(String inputString){
+<span class="nc" id="L212">        boolean movementInputValid = false;</span>
+<span class="nc bnc" id="L213" title="All 5 branches missed.">        switch (inputString) {</span>
+            case &quot;North&quot;:
+<span class="nc" id="L215">                player1.setMove(&quot;North&quot;);</span>
+<span class="nc" id="L216">                movementInputValid = true;</span>
+<span class="nc" id="L217">                break;</span>
+            case &quot;South&quot;:
+<span class="nc" id="L219">                player1.setMove(&quot;South&quot;);</span>
+<span class="nc" id="L220">                movementInputValid = true;</span>
+<span class="nc" id="L221">                break;</span>
+            case &quot;East&quot;:
+<span class="nc" id="L223">                player1.setMove(&quot;East&quot;);</span>
+<span class="nc" id="L224">                movementInputValid = true;</span>
+<span class="nc" id="L225">                break;</span>
+            case &quot;West&quot;:
+<span class="nc" id="L227">                player1.setMove(&quot;West&quot;);</span>
+<span class="nc" id="L228">                movementInputValid = true;</span>
+<span class="nc" id="L229">                break;</span>
+            default:
+<span class="nc" id="L231">                System.out.println(&quot;The direction input was invalid.&quot;);</span>
+                break;
+        }
+<span class="nc" id="L234">        return movementInputValid;</span>
+    }
+
+    public Player getPlayer1(){
+<span class="nc" id="L238">        return player1;</span>
+    }
+
+    public void CalculateTreasureDistance(Player player){
+<span class="nc" id="L242">        MapSquare treasure = gameMap.getMapSquare(0);</span>
+<span class="nc" id="L243">        int treasureX = treasure.getX_coord();</span>
+<span class="nc" id="L244">        int treasureY = treasure.getY_Coord();</span>
+<span class="nc" id="L245">        int playerX = player.getCharacterX_Coord();</span>
+<span class="nc" id="L246">        int playerY = player.getCharacterY_Coord();</span>
+        int xDistance;
+        int yDistance;
+
+<span class="nc bnc" id="L250" title="All 4 branches missed.">        if(treasureX &lt; 0 || playerX &lt; 0){</span>
+            //If either or both coordinates are negative, make them both positive and add together
+            // to find the total difference between them.
+<span class="nc" id="L253">            treasureX = Math.abs(treasureX);</span>
+<span class="nc" id="L254">            playerX = Math.abs(playerX);</span>
+<span class="nc" id="L255">            xDistance = treasureX + playerX;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        }else if(treasureX &gt; playerX){</span>
+<span class="nc" id="L257">            xDistance = treasureX - playerX;</span>
+        }else{
+<span class="nc" id="L259">            xDistance = playerX - treasureX;</span>
+        }
+
+<span class="nc bnc" id="L262" title="All 4 branches missed.">        if(treasureY &lt; 0 || playerY &lt; 0){</span>
+            //If either or both coordinates are negative, make them both positive and add together
+            // to find the total difference between them.
+<span class="nc" id="L265">            treasureY = Math.abs(treasureY);</span>
+<span class="nc" id="L266">            playerY = Math.abs(playerY);</span>
+<span class="nc" id="L267">            yDistance = treasureY + playerY;</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        }else if(treasureY &gt; playerY){</span>
+<span class="nc" id="L269">            yDistance = treasureY - playerY;</span>
+        }else{
+<span class="nc" id="L271">            yDistance = playerY - treasureY;</span>
+        }
+
+<span class="nc" id="L274">        double distance = Math.sqrt((xDistance*xDistance)+(yDistance*yDistance));</span>
+<span class="nc" id="L275">        player.setGoldenCompass(distance);</span>
+<span class="nc" id="L276">    }</span>
+
+    //Test function testing implementing some ascii art for the
+    // local area map. Might come back to this if there is more time.
+    public void asciiArtDrawTest(){
+<span class="nc" id="L281">        gameMap.addMapSquare(generateNewMapSquare(0,0));</span>
+<span class="nc" id="L282">        System.out.println(gameMap.getMapSquare(1).getSquareArt().toString());</span>
+<span class="nc" id="L283">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

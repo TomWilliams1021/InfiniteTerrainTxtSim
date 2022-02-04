@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenericCharacter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">InfiniteTerrainSim</a> &gt; <a href="index.source.html" class="el_package">com.Characters</a> &gt; <span class="el_source">GenericCharacter.java</span></div><h1>GenericCharacter.java</h1><pre class="source lang-java linenums">package com.Characters;
+
+
+public abstract class GenericCharacter {
+    private String characterName;
+    private int characterX_Coord;
+    private int characterY_Coord;
+    private movementDirection move;
+
+<span class="nc" id="L10">    public GenericCharacter() {</span>
+<span class="nc" id="L11">        this.characterName = &quot;Default Name&quot;;</span>
+<span class="nc" id="L12">        this.move = null;</span>
+<span class="nc" id="L13">    }</span>
+
+    public void setCharacterName(String inputName){
+<span class="nc" id="L16">        this.characterName = inputName;</span>
+<span class="nc" id="L17">    }</span>
+
+    public String getCharacterName(){
+<span class="nc" id="L20">        return this.characterName;</span>
+    }
+
+    public void setCharacterX_Coord(int x_coord){
+<span class="nc" id="L24">        this.characterX_Coord = x_coord;</span>
+<span class="nc" id="L25">    }</span>
+
+    public int getCharacterX_Coord(){
+<span class="nc" id="L28">        return this.characterX_Coord;</span>
+    }
+
+    public void setCharacterY_Coord(int y_coord){
+<span class="nc" id="L32">        this.characterY_Coord = y_coord;</span>
+<span class="nc" id="L33">    }</span>
+
+    public int getCharacterY_Coord(){
+<span class="nc" id="L36">        return this.characterY_Coord;</span>
+    }
+
+    public void setMove(String move){
+<span class="nc" id="L40">        movementDirection moveValue = movementDirection.valueOf(move);</span>
+<span class="nc" id="L41">        this.move = moveValue;</span>
+<span class="nc" id="L42">    }</span>
+
+    public movementDirection getMove()
+    {
+<span class="nc" id="L46">        return this.move;</span>
+    }
+
+    public void incrementX_YCoordinateBasedOnMove(movementDirection move){
+<span class="nc bnc" id="L50" title="All 5 branches missed.">        switch(move){</span>
+            case North:
+<span class="nc" id="L52">                this.setCharacterX_Coord(this.getCharacterX_Coord() - movementDirection.North.value);</span>
+<span class="nc" id="L53">                break;</span>
+            case South:
+<span class="nc" id="L55">                this.setCharacterX_Coord(this.getCharacterX_Coord() - movementDirection.South.value);</span>
+<span class="nc" id="L56">                break;</span>
+            case East:
+<span class="nc" id="L58">                this.setCharacterY_Coord(this.getCharacterY_Coord() - movementDirection.East.value);</span>
+<span class="nc" id="L59">                break;</span>
+            case West:
+<span class="nc" id="L61">                this.setCharacterY_Coord(this.getCharacterY_Coord() - movementDirection.West.value);</span>
+<span class="nc" id="L62">                break;</span>
+            default:
+                break;
+
+        }
+<span class="nc" id="L67">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

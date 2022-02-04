@@ -20,6 +20,8 @@ public class Game {
         int randNumForTreasureYCoord = random.nextInt(25 - 5) + 5;
         MapSquare thisSquare = generateTreasureMapSquare(randNumForTreasureXCoord, randNumForTreasureYCoord);
         gameMap.addMapSquare(thisSquare);
+
+        //asciiArtDrawTest();
     }
 
     public Player newPlayerNameCheckAndSet(){
@@ -273,6 +275,8 @@ public class Game {
         player.setGoldenCompass(distance);
     }
 
+    //Test function testing implementing some ascii art for the
+    // local area map. Might come back to this if there is more time.
     public void asciiArtDrawTest(){
         gameMap.addMapSquare(generateNewMapSquare(0,0));
         System.out.println(gameMap.getMapSquare(1).getSquareArt().toString());
